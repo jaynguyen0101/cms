@@ -18,20 +18,23 @@
                             <small>Author</small>
                         </h1>
                             <div class="col-xs-6">
-                                <form action="">
+                                <?php add_category(); ?>
+                                <form action="" method="POST">
                                     <div class="form-group">
                                         <label for="cat-title">Add Category</label>
-                                        <input type="text" class="form-control" name="cat-title">
+                                        <input type="text" class="form-control" name="cat_title">
                                     </div>
                                     <div class="form-group">
                                         <input class="btn btn-primary" type="submit" name="submit" value="Add Category">
                                     </div>
                                 </form>
+                                <?php 
+                                    if(isset($_GET['edit'])){
+                                        $cat_id = $_GET['edit'];
+                                        include "includes/update_categories.php";
+                                    }
+                                ?>
                             </div>
-                            <?php 
-                                $query = "SELECT  * FROM categories";
-                                $select_all_categories = mysqli_query($connection, $query);
-                            ?>
                             <div class="col-xs-6">
                                 <table class="table table-bordered table-hover">
                                     <thread>
@@ -41,16 +44,8 @@
                                         </tr>
                                     </thread>
                                     <tbody>
-                                        <?php
-                                            while($row = mysqli_fetch_assoc($select_all_categories)) {
-                                                $cat_id = $row['cat_id'];
-                                                $cat_title = $row['cat_title'];
-                                                echo "<tr>";
-                                                echo "<td>{$cat_id}</td>";
-                                                echo "<td>{$cat_title}</td>";          
-                                                echo "</tr>";
-                                            }
-                                        ?>
+                                        <?php findAllCategories(); ?>
+                                        <?php deleteCategory(); ?>
                                     </tbody>
                                 </table>
 
